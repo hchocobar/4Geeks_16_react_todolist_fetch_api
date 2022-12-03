@@ -6,9 +6,7 @@ import Todolist from "./Todolist.jsx"
 //create your first component
 const Home = () => {
 	return (
-		<div className="container">
-			<Todolist/>
-		</div>
+		<Todolist/>
 	);
 };
 

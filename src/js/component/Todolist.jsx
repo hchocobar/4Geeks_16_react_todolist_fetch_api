@@ -52,8 +52,11 @@ const Todolist = () => {
     };
     // realizo el fetch
     await fetch(urlUser, response)
-      .then(response => console.log('actualizarLista - response PUT', response))
-      .catch(error => console.log('actualizarLista - error', error))
+      .then(response => response.json())
+      .then(result => { 
+        setList([...list, inputValue]); 
+        setInputValue(""); } )
+      .catch(error => console.log('error', error))
   }
 
   // funcion onSubmit del form
@@ -62,8 +65,9 @@ const Todolist = () => {
     if (inputValue === "") return;
     // agrego el tecth para actualizar la API
     fetchApiPUTTodos(inputValue);
+    /* Las actualizaciones de list y inputValue se ejecutan dentro del la función fetchApiPUTTodos, en el result...
     setList([...list, inputValue]);
-    setInputValue("");
+    setInputValue(""); */
   }
 
   // funcion onClick del icono trash

@@ -10,27 +10,32 @@ const Todolist = () => {
   }, [])
 
   // API urls
-  let url = 'https://assets.breatheco.de/apis/fake/todos/user/';
+  let host = 'assets.breatheco.de/apis/fake/todos/user/';
   let user = 'hchocobar';
-  let urlUser = url + user;
+  let url = host + user;
 
   // fetch GET todos - consulta los todos desde la API
-  const fetchApiGETTodos = async () => {
+  const fetchApiGETTodos = () => {
     // genero el response
     const request = {
       method: 'GET',
-      redirect: 'follow'
     };
     // realizo el fetch
-    await fetch(urlUser, request)
+    fetch(url, request)
       .then(response => response.json())
-      .then(result => { result.map( (item) => { setList((e) => [...e, item.label]); } ) } )
+      .then(result => {  
+        if (result.ok) {
+          result.map( (item) => {setList((e) => [...e, item.label]);} ) 
+        } else {
+          setList(["hubo un error"])
+        }
+       } )
       .catch(error => console.log('error', error))
   };
 
 
   // fetch PUT todos - agrega un todo a la lista en la API
-  const fetchApiPUTTodos = async (task) => {
+  const fetchApiPUTTodos = (task) => {
     // creo una array vacio, recorro list y genero un array de objetos
     var todosPUT = [];
     for (let index = 0; index < list.length; index++) {
@@ -51,7 +56,7 @@ const Todolist = () => {
       body: JSON.stringify(todosPUT),
     };
     // realizo el fetch
-    await fetch(urlUser, response)
+    fetch(url, response)
       .then(response => response.json())
       .then(result => { 
         setList([...list, inputValue]); 
@@ -109,6 +114,9 @@ const Todolist = () => {
           }
           <span className="list-group-item bg-light text-end fw-lighter">
               {list.length === 0 ? "No tasks, add a task" : list.length + " Item Left"}
+          </span>
+          <span className="list-group-item bg-light text-end fw-lighter">
+              Conexión: {!user ? "No hay usuario conectado" : url}
           </span>
         </ul>
       </div>

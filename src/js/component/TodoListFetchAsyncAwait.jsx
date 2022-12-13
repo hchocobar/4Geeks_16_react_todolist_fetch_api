@@ -10,21 +10,20 @@ const Todolist = () => {
   let user = 'hchocobar';
 
   // fetch GET todos - consulta los todos desde la API
-  const fetchGetTodos = () => {
+  const fetchGetTodos = async () => {
     const url = host + user;
     const request = {
       method: 'GET',
       redirect: 'follow'
     };
-    fetch(url, request)
-      .then(response => response.json())
-      .then(result => { result.map( (item) => {setList((e) => [...e, item.label]);} )} )
-      .catch(error => console.log('error', error))
+    const response = await fetch(url, request);
+    const responseJSON = await response.json();
+    responseJSON.map( (item) => {setList((e) => [...e, item.label]);} )
   };
 
 
   // fetch PUT todos - agrega un todo a la lista en la API
-  const fetchPutTodos = (todos) => {
+  const fetchPutTodos = async (todos) => {
     const url = host + user;
     const request = {
       method: 'PUT',
@@ -33,10 +32,13 @@ const Todolist = () => {
       },
       body: JSON.stringify(todos),
     };
-    fetch(url, request)
-      .then(response => response.json())
-      .then(result => console.log("todo ok") )
-      .catch(error => console.log('error', error))
+    const response = await fetch(url, request);
+    const responseJSON = await response.json();
+    if (responseJSON.ok) { 
+      console.log("todo ok");
+    } else {
+      console.log('error', error);
+    }
   }
 
   // funcion onSubmit del form

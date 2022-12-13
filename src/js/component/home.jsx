@@ -1,13 +1,14 @@
 import React from "react";
 
-//include images into your bundle
-/* import Todolist from "./Todolist.jsx" */
-import Todos from "./Todos.jsx"
+// Fetch utilizando los métodos then y catch
+/* import Todolist from "./TodoListFetchThenCatch.jsx" */
+// Fetch utilizando async await
+import Todolist from "./TodoListFetchAsyncAwait.jsx"
 
 //create your first component
 const Home = () => {
 	return (
-		<Todos/>
+		<Todolist/>
 	);
 };
 
